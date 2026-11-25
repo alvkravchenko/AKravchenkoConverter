@@ -1,3 +1,13 @@
 spring:
   application:
     name: file-converter
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/fileconverter}
+    username: ${DB_USER:dbadmin}
+    password: ${DB_PASSWORD:dbadmin}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.yaml
