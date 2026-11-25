@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.List;
 import java.util.Set;
 
 @Component
@@ -23,7 +24,7 @@ public class ImageConverter implements Converter {
     }
 
     @Override
-    public byte[] convert(byte[] source, String sourceKey) throws IOException {
+    public List<ConversionOutput> convert(byte[] source, String sourceKey) throws IOException {
         try (PDDocument document = new PDDocument()) {
             PDPage page = new PDPage(PDRectangle.A4);
             document.addPage(page);
@@ -48,7 +49,7 @@ public class ImageConverter implements Converter {
 
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             document.save(out);
-            return out.toByteArray();
+            return List.of(new ConversionOutput(ConversionOutput.pdfKey(sourceKey), out.toByteArray()));
         }
     }
 }

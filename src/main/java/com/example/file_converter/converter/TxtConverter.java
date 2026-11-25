@@ -11,6 +11,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 @Component
 public class TxtConverter implements Converter {
@@ -27,7 +28,7 @@ public class TxtConverter implements Converter {
     }
 
     @Override
-    public byte[] convert(byte[] source, String sourceKey) throws IOException {
+    public List<ConversionOutput> convert(byte[] source, String sourceKey) throws IOException {
         String text = new String(source, StandardCharsets.UTF_8);
 
         try (PDDocument document = new PDDocument()) {
@@ -36,7 +37,7 @@ public class TxtConverter implements Converter {
 
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             document.save(out);
-            return out.toByteArray();
+            return List.of(new ConversionOutput(ConversionOutput.pdfKey(sourceKey), out.toByteArray()));
         }
     }
 
