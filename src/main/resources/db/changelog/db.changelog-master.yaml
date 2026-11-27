@@ -1,0 +1,9 @@
+databaseChangeLog:
+    - changeSet:
+        id: 00-baseline
+        author: ALVKRAVCHENKO
+        changes:
+          - tagDatabase:
+              tag: baseline
+    - include:
+          file: db/changelog/v1/01-create-inbox-outbox.yaml
